@@ -127,6 +127,23 @@ namespace API_PUCCOINS.Controllers
             return Ok(conta);
         }
 
+        [Route("api/GetContaDestino/{id}")]
+        [HttpGet]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult GetContaDestino(int id)
+        {
+            Conta conta = db.Contas.Where(a => a.UsuarioId == id).FirstOrDefault();
+
+            if (conta == null)
+            {
+                return NotFound();
+            }
+
+            conta.Saldo = 0;
+
+            return Ok(conta);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

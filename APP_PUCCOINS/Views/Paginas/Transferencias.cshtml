@@ -14,7 +14,7 @@
                     Doar Moedas
                 </h1>
                 <h5 class="card-header text-right">
-                    Moedas: 100
+                    Moedas: @ViewBag.Saldo
                 </h5>
                 <br /><br />
                 <br />
@@ -33,6 +33,7 @@
                         <div class="col-md-4">
                             @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @placeholder = "Email do destinatário" })
                             @Html.ValidationMessageFor(a => a.Email)
+                            <input type="hidden" value="@ViewBag.idUserDestino" id="idUserDestino" />
                         </div>
                         <div class="col-md-2">
                             <input type="submit" value="Pesquisar" class="btn btn-info" />
@@ -42,18 +43,21 @@
                         </div>
                     }
                 </div>
-                <br/>
+                <br />
                 <div class="row">
                     <div class="col-md-4">
                         <input type="text" class="form-control" id="qtdMoedas" placeholder="Quantidade de Moedas" />
                     </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="descTransferencia" placeholder="Identificação da Transferência" />
+                    </div>
                     <div class="col-md-2">
-                        <button value="Doar" class="btn btn-info" id="doarMoedas" >Doar</button>
+                        <button value="Doar" class="btn btn-info" id="doarMoedas">Doar</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <span id="msg" style="color:mediumseagreen;" />
+                        <span id="msg" style="color:red;" />
                     </div>
                 </div>
             </div>
@@ -64,21 +68,17 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            
+
             $('#doarMoedas').click(function () {
-                    var idUserDestino = "";
-                    @if(Model != null)
-                    {
-                        var idUserDestino = Model.Id;
-                    }
-                    
-                    var valor = $("#qtdMoedas").val();
-                    var url = "/Paginas/RealizaTransferencia";
-                    $.post(url, { idUser : idUserDestino, valor : valor }, function (data) {
-                        $("#msg").html(data);
-                    });
-                })
-               
+
+                var idUser = $("#idUserDestino").val();
+                var valor = $("#qtdMoedas").val();
+                var descTransf = $("#descTransferencia").val();
+                var url = "/Paginas/RealizaTransferencia";
+                $.post(url, { idUser: idUser, valor: valor, desc: descTransf }, function (data) {
+                    $("#msg").html(data);
+                });
+            })
         });
 
     </script>

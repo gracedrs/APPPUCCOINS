@@ -87,6 +87,7 @@ namespace APP_PUCCOINS.Controllers
                     u.Id = usuarioPesquisado.Id;
                     u.Nome = usuarioPesquisado.Nome;
                     ViewBag.UsuarioPesquisado = u.Nome;
+                    ViewBag.idUserDestino = usuarioPesquisado.Id;
                 }
                 else
                 {
@@ -100,7 +101,7 @@ namespace APP_PUCCOINS.Controllers
         public ActionResult Transferencias()
         {
             ViewBag.Title = "Home Page";
-
+            ViewBag.Saldo = GetSaldo();
             return View();
         }
 
@@ -168,18 +169,36 @@ namespace APP_PUCCOINS.Controllers
         }
 
         [HttpPost]
-        public string RealizaTransferencia(int idUser, double valor)
+        public string RealizaTransferencia(string idUser, string valor, string desc)
         {
+            if (string.IsNullOrEmpty(idUser))
+            {
+                return "Digite um e-mail válido e clique em Pesquisar.";
+            }
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                return "Você deve especificar um valor para doação";
+            }
+
+            
+
             Usuario u = (Usuario)Session["UserProfile"];
 
-            int idContaDestino = GetConta(idUser);
+            if (u.Id.ToString().Equals(idUser))
+            {
+                return "Você não pode doar para você mesmo.";
+            }
+
+            int idContaDestino = GetConta(Convert.ToInt32(idUser));
             int idContaOrigem = GetConta(u.Id);
 
             Transferencia transferencia = new Transferencia
             {
                 ContaOrigemId = idContaOrigem,
                 ContaDestinoId = idContaDestino,
-                Valor = valor
+                Valor = Convert.ToInt32(valor),
+                Descricao = desc
             };
 
             using (var client = new HttpClient())
@@ -195,6 +214,7 @@ namespace APP_PUCCOINS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    ViewBag.Saldo = GetSaldo();
                     return "Transferência realizada com sucesso.";
                 }
                 else
@@ -256,11 +276,11 @@ namespace APP_PUCCOINS.Controllers
         }
 
 
-        public int GetConta(int idUser)
+        public int GetConta(int idUserDestino)
         {
             using (var client = new HttpClient())
             {
-                string url = "https://apipuccoins.azurewebsites.net/api/GetSaldo";
+                string url = "https://apipuccoins.azurewebsites.net/api/GetContaDestino/" + idUserDestino;
 
                 Usuario usuario = (Usuario)Session["UserProfile"];
 
