@@ -37,18 +37,18 @@
                         <div class="col-md-2">
                             <input type="submit" value="Pesquisar" class="btn btn-info" />
                         </div>
-                       
+                        <div class="col-md-4">
+                            <label>@ViewBag.UsuarioPesquisado</label>
+                        </div>
                     }
                 </div>
+                <br/>
                 <div class="row">
                     <div class="col-md-4">
-                        <label>@ViewBag.UsuarioPesquisado</label>
+                        <input type="text" class="form-control" id="qtdMoedas" placeholder="Quantidade de Moedas" />
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" id="qtdMoedas" />
-                    </div>
-                    <div class="col-md-2">
-                        <button value="Doar" class="btn btn-info" id="doarMoedas" />
+                        <button value="Doar" class="btn btn-info" id="doarMoedas" >Doar</button>
                     </div>
                 </div>
                 <div class="row">
@@ -65,11 +65,16 @@
     <script>
         $(document).ready(function () {
             
-                $('#doarMoedas').click(function () {
-                    var nomeEmail = $("#procurarDestinatario").val();
+            $('#doarMoedas').click(function () {
+                    var idUserDestino = "";
+                    @if(Model != null)
+                    {
+                        var idUserDestino = Model.Id;
+                    }
+                    
                     var valor = $("#qtdMoedas").val();
                     var url = "/Paginas/RealizaTransferencia";
-                    $.post(url, { idUser: nomeEmail, valor = valor }, function (data) {
+                    $.post(url, { idUser : idUserDestino, valor : valor }, function (data) {
                         $("#msg").html(data);
                     });
                 })
