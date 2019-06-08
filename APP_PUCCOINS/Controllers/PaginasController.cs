@@ -64,6 +64,39 @@ namespace APP_PUCCOINS.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Transferencias(Usuario u)
+        {
+            ViewBag.Title = "Home Page";
+
+            using (var client = new HttpClient())
+            {
+                string url = "https://apipuccoins.azurewebsites.net/api/GetUsuariosTransferencia?query=" + u.Email;
+
+                Usuario usuario = (Usuario)Session["UserProfile"];
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(string.Format("{0}:{1}", usuario.Email, usuario.Senha))));
+                var response = client.GetStringAsync(url).Result;
+                
+                Usuario usuarioPesquisado = JsonConvert.DeserializeObject<Usuario>(response);
+
+                if(usuarioPesquisado != null)
+                {
+                    u.Email = usuarioPesquisado.Email;
+                    u.Id = usuarioPesquisado.Id;
+                    u.Nome = usuarioPesquisado.Nome;
+                    ViewBag.UsuarioPesquisado = u.Nome;
+                }
+                else
+                {
+                    ViewBag.UsuarioPesquisado = "Usuário não encontrado";
+                }
+            }
+            
+            return View(u);
+        }
+
         public ActionResult Transferencias()
         {
             ViewBag.Title = "Home Page";
@@ -135,9 +168,40 @@ namespace APP_PUCCOINS.Controllers
         }
 
         [HttpPost]
-        public void LoadUsuarios(string query)
+        public string RealizaTransferencia(int idUser, double valor)
         {
-            ViewBag.NomeUserTransfer = "Renato Moura";
+            Usuario u = (Usuario)Session["UserProfile"];
+
+            int idContaDestino = GetConta(idUser);
+            int idContaOrigem = GetConta(u.Id);
+
+            Transferencia transferencia = new Transferencia
+            {
+                ContaOrigemId = idContaOrigem,
+                ContaDestinoId = idContaDestino,
+                Valor = valor
+            };
+
+            using (var client = new HttpClient())
+            {
+                string url = "https://apipuccoins.azurewebsites.net/api/Transferencias";
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(string.Format("{0}:{1}", u.Email, u.Senha))));
+
+                var uri = new Uri(url);
+                var data = JsonConvert.SerializeObject(transferencia);
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+                var response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Transferência realizada com sucesso.";
+                }
+                else
+                {
+                    return "Erro na transferência";
+                }
+            }
         }
 
 
@@ -190,5 +254,25 @@ namespace APP_PUCCOINS.Controllers
 
             }
         }
+
+
+        public int GetConta(int idUser)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = "https://apipuccoins.azurewebsites.net/api/GetSaldo";
+
+                Usuario usuario = (Usuario)Session["UserProfile"];
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(string.Format("{0}:{1}", usuario.Email, usuario.Senha))));
+                var response = client.GetStringAsync(url).Result;
+
+                Conta conta = JsonConvert.DeserializeObject<Conta>(response);
+
+                return conta.Id;
+
+            }
+        }
+
     }
 }

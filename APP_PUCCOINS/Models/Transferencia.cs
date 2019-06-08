@@ -16,7 +16,7 @@ namespace APP_PUCCOINS.Models
         public string NomeUsuarioDestino { get; set; }
         public string NomeUsuarioOrigem { get; set; }
         public string Descricao { get; set; }
-        public int NumContaOrigemId { get; set; }
-        public int NumContaDestinoId { get; set; }
+        public int ContaOrigemId { get; set; }
+        public int ContaDestinoId { get; set; }
     }
 }
