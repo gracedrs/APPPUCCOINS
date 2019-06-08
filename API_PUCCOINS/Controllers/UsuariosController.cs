@@ -25,7 +25,6 @@ namespace API_PUCCOINS.Controllers
         // GET: api/Usuarios
         public IQueryable<Usuario> GetUsuarios()
         {
-            var t = "";
             return db.Usuarios;
         }
 
