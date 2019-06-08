@@ -1,0 +1,51 @@
+﻿@model APP_PUCCOINS.Models.Usuario
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    //cria a tag do formulário
+    @Html.AntiForgeryToken() // previne o ataque CSRF
+    @Html.ValidationSummary(true)
+    if (@ViewBag.Message != null)
+    {
+        <div style="border:1px solid red">
+            @ViewBag.Message
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-md-offset-5">
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(a => a.Email)
+                    @Html.TextBoxFor(a => a.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Email)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(a => a.Senha)
+                    @Html.PasswordFor(a => a.Senha, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.Senha)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Login" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

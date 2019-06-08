@@ -1,0 +1,54 @@
+﻿﻿@{
+    ViewData["Title"] = "Tansferencias";
+}
+<div class="align-middle text-center">
+    <br /><br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-4 text-center">
+                    Doar Moedas
+                </h1>
+                <h5 class="card-header text-right">
+                    Moedas: 100
+                </h5>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="procurarDestinatario" aria-describedby="procurarDestinatario" placeholder="Nome do Destinatario">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-block" id="Pesquisar">Buscar</button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-8">
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <br /><br />
+                        <input type="number" class="form-control" id="valorTransferencia" aria-describedby="valorTransferencia" placeholder="Valor">
+                        <br />
+                        <button type="button" class="btn btn-success btn-block" id="fazerTransferencia">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('#Pesquisar').click(function () {
+                var nomeEmail = $("#procurarDestinatario").val();
+                var url = "/Paginas/LoadUsuarios";
+                $.post(url, { query: nomeEmail }, function (data) {
+
+                });
+            })
+        });
+    </script>
+}
