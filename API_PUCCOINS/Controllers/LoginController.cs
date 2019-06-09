@@ -16,6 +16,15 @@ namespace API_PUCCOINS.Controllers
     {
         private API_PUCCOINSContext db = new API_PUCCOINSContext();
 
+        /// <summary>
+        /// Verifica o Login
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/DoLogin")]
         [HttpPost]
         [ResponseType(typeof(void))]
@@ -33,6 +42,15 @@ namespace API_PUCCOINS.Controllers
             }
         }
 
+        /// <summary>
+        /// Grava um novo Usuario
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/NovoUsuario")]
         [HttpPost]
         [ResponseType(typeof(void))]
@@ -67,6 +85,15 @@ namespace API_PUCCOINS.Controllers
             db.SaveChanges();
         }
 
+        /// <summary>
+        /// Altera a senha atraves de um GUID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/ModificaSenha/{guid}")]
         [HttpPut]
         [ResponseType(typeof(void))]

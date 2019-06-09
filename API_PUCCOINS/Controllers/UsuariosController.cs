@@ -23,11 +23,29 @@ namespace API_PUCCOINS.Controllers
 
         [AuthorizeUser(Roles = "Admin")]
         // GET: api/Usuarios
+        /// <summary>
+        /// Retorna todos os usuários cadastrados
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         public IQueryable<Usuario> GetUsuarios()
         {
             return db.Usuarios;
         }
 
+        /// <summary>
+        /// Busca usuário para transferencia
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/GetUsuariosTransferencia")]
         [HttpGet]
         [ResponseType(typeof(UsuarioDTO))]
@@ -51,9 +69,17 @@ namespace API_PUCCOINS.Controllers
             return Ok(usuario);
         }
 
-
-        [AuthorizeUser(Roles = "Admin")]
         // GET: api/Usuarios/5
+        /// <summary>
+        /// Busca um usuário com o ID específico
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
+        [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuario(int id)
         {
@@ -66,6 +92,15 @@ namespace API_PUCCOINS.Controllers
             return Ok(usuario);
         }
 
+        /// <summary>
+        /// Retorna o usuário através do email
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/GetUsuarioByEmail")]
         [AuthorizeUser(Roles = "Admin")]
         // GET: api/Usuarios/5
@@ -81,6 +116,15 @@ namespace API_PUCCOINS.Controllers
             return Ok(usuario);
         }
 
+        /// <summary>
+        /// Atualiza as informações de um usuário através de um ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         // PUT: api/Usuarios/5
         [ResponseType(typeof(void))]
@@ -117,6 +161,15 @@ namespace API_PUCCOINS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Insere um novo usuário
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         // POST: api/Usuarios
         [ResponseType(typeof(Usuario))]
@@ -152,6 +205,15 @@ namespace API_PUCCOINS.Controllers
             db.SaveChanges();
         }
 
+        /// <summary>
+        /// Remove um usuário através de um ID especificado
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         // DELETE: api/Usuarios/5
         [ResponseType(typeof(Usuario))]

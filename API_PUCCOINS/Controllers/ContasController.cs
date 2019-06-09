@@ -20,6 +20,15 @@ namespace API_PUCCOINS.Controllers
         private API_PUCCOINSContext db = new API_PUCCOINSContext();
 
         // GET: api/Contas
+        /// <summary>
+        /// Retorna todas as contas cadastradas
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         public IQueryable<Conta> GetContas()
         {
@@ -27,6 +36,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // GET: api/Contas/5
+        /// <summary>
+        /// Busca uma conta especifica atraves de seu ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Conta))]
         public IHttpActionResult GetConta(int id)
@@ -41,6 +59,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // PUT: api/Contas/5
+        /// <summary>
+        /// Altera as informações de uma conta atraves de seu ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutConta(int id, Conta conta)
@@ -77,6 +104,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // POST: api/Contas
+        /// <summary>
+        /// Cria uma nova Conta
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Conta))]
         public IHttpActionResult PostConta(Conta conta)
@@ -93,6 +129,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // DELETE: api/Contas/5
+        /// <summary>
+        /// Deleta uma conta
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Conta))]
         public IHttpActionResult DeleteConta(int id)
@@ -109,8 +154,16 @@ namespace API_PUCCOINS.Controllers
             return Ok(conta);
         }
 
-        
 
+        /// <summary>
+        /// Retorna o saldo disponivel do Usuário
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/GetSaldo")]
         [HttpGet]
         [ResponseType(typeof(void))]
@@ -127,6 +180,15 @@ namespace API_PUCCOINS.Controllers
             return Ok(conta);
         }
 
+        /// <summary>
+        /// Retorna a conta destino atraves de um ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/GetContaDestino/{id}")]
         [HttpGet]
         [ResponseType(typeof(void))]

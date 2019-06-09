@@ -21,6 +21,15 @@ namespace API_PUCCOINS.Controllers
 
 
         // GET: api/Transferencias
+        /// <summary>
+        /// Retorna todas as transferencias efetuadas
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         public IQueryable<TransferenciaDTO> GetTransferencias()
         {
             int idUser = Convert.ToInt32(Thread.CurrentPrincipal.Identity.Name);
@@ -42,6 +51,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // GET: api/Transferencias/5
+        /// <summary>
+        /// Retorna detalhes de uma trasferencia especifica atraves de seu ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [ResponseType(typeof(TransferenciaDTO))]
         public IHttpActionResult GetTransferencia(int id)
         {
@@ -69,6 +87,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // PUT: api/Transferencias/5
+        /// <summary>
+        /// Altera os dados de uma trasferencia atraves de seu ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTransferencia(int id, Transferencia transferencia)
         {
@@ -104,6 +131,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // POST: api/Transferencias
+        /// <summary>
+        /// Efetua uma transferia para outro usuário
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [ResponseType(typeof(Transferencia))]
         public IHttpActionResult PostTransferencia(Transferencia transferencia)
         {
@@ -148,7 +184,16 @@ namespace API_PUCCOINS.Controllers
             db.SaveChanges();
         }
 
-        // DELETE: api/Transferencias/5
+        // DELETE: api/Transferencias/
+        /// <summary>
+        /// Remove uma trasferencia efetuada
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [ResponseType(typeof(Transferencia))]
         public IHttpActionResult DeleteTransferencia(int id)
         {

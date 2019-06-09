@@ -19,13 +19,30 @@ namespace API_PUCCOINS.Controllers
         private API_PUCCOINSContext db = new API_PUCCOINSContext();
 
         // GET: api/Premios
+        /// <summary>
+        /// Retorna todos os Premios cadastrados
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         public IQueryable<Premio> GetPremios()
         {
             return db.Premios;
         }
 
         // GET: api/Premios/5
-
+        /// <summary>
+        /// Busca um premio atraves de ID especifico
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [ResponseType(typeof(Premio))]
         public IHttpActionResult GetPremio(int id)
         {
@@ -39,6 +56,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // PUT: api/Premios/5
+        /// <summary>
+        /// Atualiza os dados de um premio
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPremio(int id, Premio premio)
@@ -75,6 +101,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // POST: api/Premios
+        /// <summary>
+        /// Cadastra um novo premio
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Premio))]
         public IHttpActionResult PostPremio(Premio premio)
@@ -91,6 +126,15 @@ namespace API_PUCCOINS.Controllers
         }
 
         // DELETE: api/Premios/5
+        /// <summary>
+        /// Deleta um premio atraves de seu ID
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [AuthorizeUser(Roles = "Admin")]
         [ResponseType(typeof(Premio))]
         public IHttpActionResult DeletePremio(int id)

@@ -17,6 +17,15 @@ namespace API_PUCCOINS.Controllers
     {
         private API_PUCCOINSContext db = new API_PUCCOINSContext();
 
+        /// <summary>
+        /// Retorna os premios resgatados de um usuário
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/PremiosResgatados")]
         [HttpGet]
         public IQueryable<UsuarioPremioDTO> GetPremiosResgatados()
@@ -41,6 +50,15 @@ namespace API_PUCCOINS.Controllers
             
         }
 
+        /// <summary>
+        /// Resgata o premio definido pelo usuário mediante ao saldo disponivel
+        /// </summary>
+        /// <param name="pessoa">Objeto do tipo Pessoa</param>
+        /// <response code="200">Sucess</response>
+        /// <response code="400">Ocorreu um erro na exceção</response>
+        /// <response code="401">Acesso não autorizado</response>
+        /// <response code="403">Acesso não autorizado</response>
+        /// <returns></returns>
         [Route("api/ResgataPremio")]
         [HttpPost]
         [ResponseType(typeof(void))]
