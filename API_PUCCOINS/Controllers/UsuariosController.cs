@@ -66,6 +66,21 @@ namespace API_PUCCOINS.Controllers
             return Ok(usuario);
         }
 
+        [Route("api/GetUsuarioByEmail")]
+        [AuthorizeUser(Roles = "Admin")]
+        // GET: api/Usuarios/5
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult GetUsuarioByEmail(string email)
+        {
+            Usuario usuario = db.Usuarios.Where(a => a.Email == email).FirstOrDefault();
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(usuario);
+        }
+
         [AuthorizeUser(Roles = "Admin")]
         // PUT: api/Usuarios/5
         [ResponseType(typeof(void))]

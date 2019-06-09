@@ -1,0 +1,85 @@
+﻿@model APP_PUCCOINS_oAUTH.Models.Usuario
+
+﻿@{
+    /**/
+
+    ViewData["Title"] = "Tansferencias";
+}
+<div class="align-middle">
+    <br /><br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-4 text-center">
+                    Doar Moedas
+                </h1>
+                <h5 class="card-header text-right">
+                    Moedas: @ViewBag.Saldo
+                </h5>
+                <br /><br />
+                <br />
+                <div class="row">
+                    @using (Html.BeginForm("Transferencias", "Paginas", FormMethod.Post))
+                    {
+                        //cria a tag do formulário
+                        @Html.AntiForgeryToken() // previne o ataque CSRF
+                        @Html.ValidationSummary(true)
+                        if (@ViewBag.Message != null)
+                        {
+                            <div style="border:1px solid red">
+                                @ViewBag.Message
+                            </div>
+                        }
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @placeholder = "Email do destinatário" })
+                            @Html.ValidationMessageFor(a => a.Email)
+                            <input type="hidden" value="@ViewBag.idUserDestino" id="idUserDestino" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" value="Pesquisar" class="btn btn-info" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>@ViewBag.UsuarioPesquisado</label>
+                        </div>
+                    }
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="qtdMoedas" placeholder="Quantidade de Moedas" />
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="descTransferencia" placeholder="Identificação da Transferência" />
+                    </div>
+                    <div class="col-md-2">
+                        <button value="Doar" class="btn btn-info" id="doarMoedas">Doar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <span id="msg" style="color:red;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('#doarMoedas').click(function () {
+
+                var idUser = $("#idUserDestino").val();
+                var valor = $("#qtdMoedas").val();
+                var descTransf = $("#descTransferencia").val();
+                var url = "/Paginas/RealizaTransferencia";
+                $.post(url, { idUser: idUser, valor: valor, desc: descTransf }, function (data) {
+                    $("#msg").html(data);
+                });
+            })
+        });
+
+    </script>
+}

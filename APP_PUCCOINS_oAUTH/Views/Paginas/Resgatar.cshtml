@@ -1,0 +1,122 @@
+﻿﻿@{
+    ViewData["Title"] = "Resgatar";
+}
+
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.dataTables.css" />
+
+
+<div class="align-middle">
+    <br /><br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-4 text-center">
+                    Resgatar
+                </h1>
+                <h5 class="card-header text-right">
+                    Moedas: @ViewBag.Saldo
+                </h5>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.DropDownList("Premios", (IEnumerable<SelectListItem>)ViewBag.Premios, null, new { @class = "form-control", id = "ddl_premios" })
+                        <br />
+                        <button class="btn btn-info align-middle" type="button" id="Salvar">Realizar Pedido</button>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-6">
+                        <span id="msg" style="color:mediumseagreen;" />
+                    </div>
+                    <br /><br />
+                    <div class="row">
+                        <h3 class="text-center">
+                            Pedidos
+                            <br /><br />
+                        </h3>
+                        <table class="table table-bordered table-striped table-hover" id="myDataTable">
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora Solicitação</th>
+                                    <th>Data/Hora Entrega</th>
+                                    <th>Item</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <br /><br /><br />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <!-- JS -->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Pega os dados do banco de dados para preencher o datatable
+            var oTable = $("#myDataTable").DataTable({
+                "language": {
+                    "lengthMenu": "Exibe _MENU_ Registros por página",
+                    "search": "Procurar",
+                    "paginate": { "previous": "Retorna", "next": "Avança" },
+                    "zeroRecords": "Nada foi encontrado",
+                    "info": "Exibindo página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Sem registros",
+                    "infoFiltered": "(filtrado de _MAX_ regitros totais)"
+                },
+                "responsive": true,
+                "responsive": {
+                    "type": 'column'
+                },
+                "processing": true, // mostrar a progress bar
+                //"serverSide": true, // processamento no servidor
+                "filter": true, // habilita o filtro(search box)
+                "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+                "pageLength": 3, // define o tamanho da página
+                "ajax": {
+                    "url": "/Paginas/LoadPremiosResgatados",
+                    "type": "GET",
+                    "dataType": "json"
+                },
+
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "className": 'dt-body-left'
+
+                    }
+                ],
+
+                "columns": [
+
+                    { "data": "DataSolicitacaoView", "title": "Data Solicitação" },
+                    { "data": "DataEntregaView", "title": "Data Entrega" },
+                    { "data": "DescricaoPremio", "title": "Prêmio" },
+                    { "data": "ValorPremio", "title": "Valor" },
+                ]
+
+            });
+        });
+
+
+        $('#Salvar').click(function () {
+            var url = "/Paginas/SolicitaResgatePremio";
+            var idPremio = $("#ddl_premios").val();
+            $.post(url, { idPremio: idPremio }, function (data) {
+
+                var oTable = $('#myDataTable').DataTable()
+
+                oTable.ajax.reload();
+
+                $("#msg").html(data);
+            });
+        })
+
+    </script>
+}
