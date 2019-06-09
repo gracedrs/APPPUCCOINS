@@ -51,5 +51,13 @@ namespace APP_PUCCOINS.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Logout()
+        {
+            Session["UserProfile"] = null;
+            return RedirectToAction("Index");
+        }
+
     }
 }

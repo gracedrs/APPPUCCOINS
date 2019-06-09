@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - PUCCOINS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -22,10 +22,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Paginas")</li>
                     <li>@Html.ActionLink("Minhas Moedas", "MinhasMoedas", "Paginas")</li>
-                    <li>@Html.ActionLink("Relatorio", "Relatorio", "Paginas")</li>
                     <li>@Html.ActionLink("Resgatar", "Resgatar", "Paginas")</li>
-                    <li>@Html.ActionLink("Transferencias", "Transferencias", "Paginas")</li>
-
+                    <li>@Html.ActionLink("Transferências", "Transferencias", "Paginas")</li>
+                    <li>@Html.ActionLink("LogOut", "Logout", "Login")</li>
                 </ul>
             </div>
         </div>
